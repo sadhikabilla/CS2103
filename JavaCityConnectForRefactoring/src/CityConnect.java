@@ -101,9 +101,9 @@ public class CityConnect {
 		showToUser(WELCOME_MESSAGE);
 		while (true) {
 			System.out.print("Enter command:");
-			String command = scanner.nextLine();
-			String userCommand = command;
-			String feedback = executeCommand(userCommand);
+			String Usercommand = scanner.nextLine();
+			//String userCommand = command; //redundant sentence
+			String feedback = executeCommand(Usercommand);
 			showToUser(feedback);
 		}
 	}
@@ -119,7 +119,8 @@ public class CityConnect {
 	private static void showToUser(String text) {
 		System.out.println(text);
 	}
-
+    
+   //this is only supposed to execute the commands
 	public static String executeCommand(String userCommand) {
 		if (userCommand.trim().equals(""))
 			return String.format(MESSAGE_INVALID_FORMAT, userCommand);
@@ -128,19 +129,7 @@ public class CityConnect {
 
 		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 
-		switch (commandType) {
-		case ADD_ROUTE:
-			return addRoute(userCommand);
-		case GET_DISTANCE:
-			return getDistance(userCommand);
-		case INVALID:
-			return String.format(MESSAGE_INVALID_FORMAT, userCommand);
-		case EXIT:
-			System.exit(0);
-		default:
-			//throw an error if the command is not recognized
-			throw new Error("Unrecognized command type");
-		}
+		return determineCommandType(userCommand, commandType);
 		/*
 		 * ==============NOTE TO STUDENTS======================================
 		 * If the rest of the program is correct, this error will never be thrown.
@@ -148,6 +137,23 @@ public class CityConnect {
 		 * ====================================================================
 		 */
 	}
+
+private static String determineCommandType(String userCommand,
+		COMMAND_TYPE commandType) throws Error {
+	switch (commandType) {
+	case ADD_ROUTE:
+		return addRoute(userCommand);
+	case GET_DISTANCE:
+		return getDistance(userCommand);
+	case INVALID:
+		return String.format(MESSAGE_INVALID_FORMAT, userCommand);
+	case EXIT:
+		System.exit(0);
+	default:
+		//throw an error if the command is not recognized
+		throw new Error("Unrecognized command type");
+	}
+}
 
 	/*
 	 * ==============NOTE TO STUDENTS======================================
